@@ -1,3 +1,8 @@
+/*Trabalho 2 - Teoria dos Compiladores (DCC045) 
+ * Alunos: Gabriel Pereira Senra Soares - 201935006
+ *         Lucas Castro Carvalho - 201835015
+*/
+
 package lang.parser;
 
 // Generated from Lang.g4 by ANTLR 4.13.2

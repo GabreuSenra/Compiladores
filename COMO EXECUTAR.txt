@@ -1,0 +1,9 @@
+No Linux, Abra um terminal nesta pasta e use os seguintes comandos:
+"make compile". Para compilar o código 
+"make run". Para rodar o programa com a ação '-bs'
+"make interp". para rodar o programa com a ação '-i' 
+
+O arquivo makefile vai executar o programa passando como argumento o "attrADD.lan" como padrão, 
+para usar outro arquivo use o comando:
+
+"make LAN_PATH='path para o arquivo.lan' interp"
