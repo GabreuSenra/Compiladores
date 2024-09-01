@@ -1,11 +1,21 @@
 package lang.ast;
 
 public abstract class SuperNode {
-   
-   // The line and column of the node in the input text
-   
-    public abstract int getLine();
-    public abstract int getColumn();
+    private int line;
+    private int column;
+
+    public SuperNode(int line, int column) {
+        this.line = line;
+        this.column = column;
+    }
+
+    public int getLine() {
+        return line;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public abstract <T> T accept(Visitor<T> visitor);
 }
-
-

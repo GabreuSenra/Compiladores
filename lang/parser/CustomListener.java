@@ -11,10 +11,9 @@ public class CustomListener extends LangBaseListener{
     @Override
     public void enterProgram(LangParser.ProgramContext ctx) {
         // Criar uma nova instância de SuperNodeImpl
-        result = new SuperNodeImpl();
+        result = new SuperNodeImpl(0, 0);
 
         // Preencher os dados do SuperNodeImpl a partir do ctx
-        // Exemplo:
         result.setLine(ctx.getStart().getLine());
         result.setColumn(ctx.getStart().getCharPositionInLine());
     }

@@ -1,7 +1,7 @@
 grammar Lang;
 
 program
-    : def
+    : def+
     ;
 def
     : data | fun 
@@ -90,6 +90,7 @@ TYPE_DEF: '::';
 RETURN_TYPE: ':';
 COMMA: ',';
 SEMI: ';';
+NULL: 'null';
 
 BOOLEAN: 'boolean';
 ABSTRACT: 'abstract';
@@ -113,7 +114,7 @@ ITERATE: 'iterate';
 InputCharacter : '[^\r|\n]';
 FimDeLinha : '\r|\n|\r\n';
 Branco : '\r|\n|\r\n |[ \t\f]';
-ID      : [a-z][a-zA-Z0-9_]* ;
+ID      : [a-zA-Z][a-zA-Z0-9_]* ;
 INT     : [0-9]+ ;
 FLOAT   : [0-9]* '.' [0-9]+ ;
 CHAR : '\'' ( '\\' . | ~('\\' | '\'') ) '\'' ;

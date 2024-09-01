@@ -1,6 +1,7 @@
 data Ponto {
    x :: Float;
    y :: Float;
+   z :: Float;
 }
 
 f(d :: Int ) : Int, Char{
@@ -8,6 +9,5 @@ f(d :: Int ) : Int, Char{
 }
 
 main(x :: Ponto){
-   print x.x;
-   z = f(0)[0] + 2;
+   print x.x;  
 }

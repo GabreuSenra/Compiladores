@@ -26,7 +26,7 @@ public class LangCompiler{
           
        }
        try{
-	   ParseAdaptor langParser = new MeuParseAdaptor();
+	   ParseAdaptor langParser = new MeuParseAdaptor(); //instancia o analisador sintático
           
           if(args[0].equals("-bs") ){
               System.out.println("Executando bateria de testes sintáticos:");
@@ -50,10 +50,10 @@ public class LangCompiler{
                System.err.println("Aborting due to syntax error(s)");
                System.exit(1);
           }
-          else if(args[0].equals("-i") ){
-              //iv = new InterpreterVisitor();
-              //result.accept(iv);
-              //((InterpreterVisitor)iv).printEnv();
+          else if(args[0].equals("-i") ){ //instancia o interpretador e passa o arquivo 
+              InterpreterVisitor iv = new InterpreterVisitor();
+              result.accept(iv);
+              ((InterpreterVisitor)iv).printEnv();
           }
           else if(args[0].equals("-ii") ){
             // iv = new InteractiveInterpreterVisitor();

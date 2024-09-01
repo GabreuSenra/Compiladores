@@ -1,0 +1,8 @@
+data Ponto{
+    y :: Float;
+    z :: Bool;
+}
+
+main(){
+    x = new Ponto;
+}
