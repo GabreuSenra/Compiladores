@@ -1,3 +1,4 @@
- javac -cp .:lib/antlr-4.13.2-complete.jar lang/**/*.java   Compilar
- java -cp .:lib/antlr-4.13.2-complete.jar lang.LangCompiler -bs    Rodar
- find . -name "*.class" -type f -delete   Apagar todos arquivos .class
+javac -cp .:lib/antlr-4.13.2-complete.jar lang/**/*.java   -------------Compilar
+java -cp .:lib/antlr-4.13.2-complete.jar lang.LangCompiler -bs    ------Rodar
+find . -name "*.class" -type f -delete   -------------------------------Apagar todos arquivos .class
+make LAN_PATH='testes/semantica/certo/custom.lan' run ------------------Executa o run do makefile no com o LAN_PATH: testes/semantica/certo/custom.lan

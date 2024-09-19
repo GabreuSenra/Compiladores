@@ -12,13 +12,15 @@ public class LValueNode extends ExpNode {
     private LValueNode lvalue;
     private ExpNode indice;
     private List<String> fields;
+    private List<Object> indexes; //valor do indice
 
-    public LValueNode(int line, int column, String id, LValueNode lvalue, ExpNode indice, List<String> fields) {
+    public LValueNode(int line, int column, String id, LValueNode lvalue, ExpNode indice, List<String> field, List<Object> indexes) {
         super(line, column);
         this.id = id;
         this.lvalue = lvalue;
         this.indice = indice;
-        this.fields = fields;
+        this.fields = field;
+        this.indexes = indexes;
     }
 
     public String getId() {
@@ -33,8 +35,12 @@ public class LValueNode extends ExpNode {
         return indice;
     }
 
-    public List<String> getFields() {
+    public List<String> getField() {
         return fields;
+    }
+
+    public List<Object> getIndexes(){
+        return indexes;
     }
 
     @Override

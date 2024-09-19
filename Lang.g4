@@ -41,7 +41,7 @@ cmd
     | 'print' exp ';'
     | 'return' exp (',' exp)* ';'
     | lvalue '=' exp ';'
-    | ID '(' exps? ')' '<' lvalue (',' lvalue)* '>' ';'
+    | ID '(' exps? ')' ('<' lvalue (',' lvalue)* '>')? ';'
     ;
 exp     
     : exp ('&&' | '<' | '==' | '!=' | '+' | '-' | '*' | '/' | '%' ) exp 
@@ -55,7 +55,7 @@ exp
     | CHAR 
     | lvalue 
     | '(' exp ')' 
-    | 'new' type ('[' exp ']')? 
+    | 'new' type ('[' exp ']')*
     | ID '(' exps? ')' ('[' exp ']')?
     ;
 lvalue  
@@ -112,12 +112,14 @@ ITERATE: 'iterate';
 
 
 InputCharacter : '[^\r|\n]';
-FimDeLinha : '\r|\n|\r\n';
-Branco : '\r|\n|\r\n |[ \t\f]';
+FimDeLinha : '\\r' | '\\n' | '\\r\\n';
+Branco : '[ \t\f]';
+
 ID      : [a-zA-Z][a-zA-Z0-9_]* ;
 INT     : [0-9]+ ;
 FLOAT   : [0-9]* '.' [0-9]+ ;
-CHAR : '\'' ( '\\' . | ~('\\' | '\'') ) '\'' ;
+CHAR : '\'' ( ~('\\' | '\'' | '\r') | '\n' | '\\' ) '\'' ;
+
 WS      : [ \t\r\n]+ -> skip ;
 COMMENT : '--' ~[\r\n]* -> skip ;
 MLCOMMENT : '{-' .*? '-}' -> skip ;

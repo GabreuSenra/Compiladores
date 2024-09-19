@@ -1,0 +1,75 @@
+data Ponto{
+    x :: Int[];
+    y :: Int;
+}
+data Poligono{
+    p :: Ponto[];
+}
+
+main(){
+    triangulo = new Poligono;
+
+    triangulo.p = new Ponto[3];
+
+    triangulo.p[0].x = new Int[2];
+
+    triangulo.p[0].x[0] = 10;
+
+    read triangulo.p[0].x[1];
+    print 'V';
+    print 'a';
+    print 'l';
+    print 'o';
+    print 'r';
+    print ' ';
+    print 'L';
+    print 'i';
+    print 'd';
+    print 'o';
+    print ':';
+    print '\n';
+
+    print triangulo.p[0].x[1];
+
+    var = triangulo.p[0].x[0] + triangulo.p[0].x[1];
+}
+
+
+{-
+data Ponto{
+    x :: Int[];
+    y :: Int;
+}
+data Poligono{
+    p :: Ponto[];
+}
+main(x :: Int[]){
+
+    p = new Ponto;
+
+    valor = 20;
+
+    tam = 4;
+    quad = new Poligono;
+    quad.p = new Ponto[tam - 1];
+
+    quad.p[0].x = new Int[2];
+    quad.p[1].x = new Int[3];
+    quad.p[2].x = new Int[2];
+
+    quad.p[0].x[0] = 5;
+    quad.p[0].x[1] = 1;
+
+    quad.p[1].x[0] = 1;
+    quad.p[1].x[1] = 2;
+    quad.p[1].x[2] = 3;
+
+    quad.p[2].x[0] = 2;
+    quad.p[2].x[1] = 33;
+
+    print quad.p[2].x[1];
+
+    p.y = valor + quad.p[0].x[0];
+    
+}
+-}

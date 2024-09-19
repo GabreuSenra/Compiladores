@@ -152,6 +152,8 @@ public class CustomVisitor extends LangBaseVisitor<SuperNode> {
             return null;
         }
 
+        //System.out.println(ctx.getText());
+
         if (ctx.btype() != null) {
             // Usa visitBtype para lidar com tipos básicos e visita Btype
             return visitBtype(ctx.btype());
@@ -161,7 +163,7 @@ public class CustomVisitor extends LangBaseVisitor<SuperNode> {
             SuperNode innerType = visit(ctx.type()); //visita type recursivamente
 
             //cria outro TypeNode com os valores recebidos recursivamente de innerType
-            return new TypeNode(ctx.start.getLine(), ctx.start.getCharPositionInLine(), innerType);
+            return new TypeNode(ctx.start.getLine(), ctx.start.getCharPositionInLine(), innerType, ctx.getText());
         }
 
         return null; 
@@ -338,8 +340,7 @@ public class CustomVisitor extends LangBaseVisitor<SuperNode> {
 
         //System.out.println(ctx.getText());
 
-
-        if (ctx.exp().size() == 2) {
+        if (ctx.exp().size() == 2 && ctx.NEW() == null) {
 
             //System.out.println("FAZENDO OPERAÇÃO");
 
@@ -431,6 +432,8 @@ public class CustomVisitor extends LangBaseVisitor<SuperNode> {
 
             //System.out.println("NEW");
 
+            System.out.println(ctx.getText());
+
             TypeNode type = (TypeNode) visit(ctx.type()); //visita Type
             List<ExpNode> exps = new ArrayList<>();
             for(ExpContext exp : ctx.exp()){
@@ -439,8 +442,13 @@ public class CustomVisitor extends LangBaseVisitor<SuperNode> {
                 }
             }
 
+            //long count = ctx.getText().chars().filter(ch -> ch == '[').count();
+            int count = countArguments(ctx.getText());
+
+            System.out.println(count);
+
             //cria o nó auxiliar NewNode para tratar criação de objetos
-            return new NewNode(ctx.start.getLine(), ctx.start.getCharPositionInLine(), type, exps);
+            return new NewNode(ctx.start.getLine(), ctx.start.getCharPositionInLine(), type, exps, (int)count);
         }
         
         if (ctx.ID() != null) {
@@ -461,6 +469,30 @@ public class CustomVisitor extends LangBaseVisitor<SuperNode> {
         return null; 
     }
 
+    public static int countArguments(String str) {
+        int count = 0;
+        int depth = 0;
+
+        // Itera sobre cada caractere da string
+        for (int i = 0; i < str.length(); i++) {
+            char currentChar = str.charAt(i);
+
+            if (currentChar == '[') {
+                // Se a profundidade for zero, é um novo argumento no nível externo
+                if (depth == 0) {
+                    count++;
+                }
+                // Aumenta a profundidade para cada colchete de abertura
+                depth++;
+            } else if (currentChar == ']') {
+                // Diminui a profundidade para cada colchete de fechamento
+                depth--;
+            }
+        }
+
+        return count;
+    }
+
     @Override
     public SuperNode visitLvalue(LvalueContext ctx) {
 
@@ -472,7 +504,7 @@ public class CustomVisitor extends LangBaseVisitor<SuperNode> {
         ExpNode index = null;
         List<String> fields = new ArrayList<>();
 
-        if(ctx.ID() != null){
+        if(ctx.ID() != null && ctx.DOT() == null){ //lvalue -> ID
             // Extrair o ID principal (raiz do lvalue)
 
             id = ctx.ID().getText(); // Raiz do lvalue
@@ -480,9 +512,9 @@ public class CustomVisitor extends LangBaseVisitor<SuperNode> {
             //System.out.println("ID: " + ctx.ID().getText());
 
             //Retona ID
-            return new LValueNode(ctx.start.getLine(), ctx.start.getCharPositionInLine(), id, null, index, fields);
+            return new LValueNode(ctx.start.getLine(), ctx.start.getCharPositionInLine(), id, null, null, new ArrayList<String>(), new ArrayList<Object>());
         }
-        if(ctx.ID() == null && ctx.L_BRACKET() != null){
+        if(ctx.ID() == null && ctx.L_BRACKET() != null){ // lvalue -> lvalue [ exp ]
             // Se houver acesso a array
 
             LValueNode lvalue = (LValueNode) visit(ctx.lvalue());
@@ -491,16 +523,16 @@ public class CustomVisitor extends LangBaseVisitor<SuperNode> {
             //System.out.println(ctx.lvalue().getText() + '[' + ctx.exp().getText() + ']');
 
             // Retornar um novo LValueNode com os dados extraídos: lvalue '[' exp ']'
-            return new LValueNode(ctx.start.getLine(), ctx.start.getCharPositionInLine(), id, lvalue, index, null);
+            return new LValueNode(ctx.start.getLine(), ctx.start.getCharPositionInLine(), null, lvalue, index, new ArrayList<String>(), new ArrayList<Object>());
         }
-        if(ctx.DOT() != null){
+        if(ctx.DOT() != null){ // lvalue -> lavlue.ID
             // Se houver acesso a campo (com ponto)
             LValueNode lvalue = (LValueNode) visit(ctx.lvalue());
             String field = ctx.ID().getText(); // Campo após o ponto
             fields.add(field);
 
             // Retornar um novo LValueNode com os dados extraídos: lvalue '.' ID 
-            return new LValueNode(ctx.start.getLine(), ctx.start.getCharPositionInLine(), id, lvalue, null, fields);
+            return new LValueNode(ctx.start.getLine(), ctx.start.getCharPositionInLine(), null, lvalue, null, fields, new ArrayList<Object>());
         }
 
         return null; 

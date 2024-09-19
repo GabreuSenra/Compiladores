@@ -10,11 +10,17 @@ import java.util.List;
 public class NewNode extends ExpNode {
     private final TypeNode type;
     private final List<ExpNode> exps;
+    private final int numArray;
 
-    public NewNode(int line, int column, TypeNode type, List<ExpNode> exps) {
+    public NewNode(int line, int column, TypeNode type, List<ExpNode> exps, int numArray) {
         super(line, column);
         this.type = type;
         this.exps = exps;
+        this.numArray = numArray;
+    }
+
+    public int getNumArray(){
+        return numArray;
     }
 
     public TypeNode getType() {

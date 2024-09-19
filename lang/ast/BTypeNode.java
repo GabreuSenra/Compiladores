@@ -5,7 +5,7 @@ public class BTypeNode extends TypeNode {
 
     // Construtor
     public BTypeNode(int line, int column, String btype) {
-        super(line, column, null);
+        super(line, column, null, btype);
         this.btype = btype;
     }
 

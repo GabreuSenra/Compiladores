@@ -5,6 +5,7 @@ import java.util.List;
 public class ExpNode extends SuperNode {
     private String expType;
     private List<SuperNode> children;
+    private Object value;
 
     public ExpNode(int line, int column){
         super(line, column);
@@ -22,6 +23,13 @@ public class ExpNode extends SuperNode {
 
     public List<SuperNode> getChildren() {
         return children;
+    }
+
+    public void setExpValue(Object value){
+        this.value = value;
+    }
+    public Object getExpValue(){
+        return value;
     }
 
     @Override

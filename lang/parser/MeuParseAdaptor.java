@@ -26,25 +26,18 @@ public class MeuParseAdaptor implements ParseAdaptor {
             // Cria o parser a partir do token stream
             LangParser parser = new LangParser(tokens);
             
-            /* 
-            // Define um error listener customizado para capturar erros
             parser.removeErrorListeners();
-            parser.addErrorListener(new ErrorListener());*/
+            ErrorListener errorListener = new ErrorListener();
+            parser.addErrorListener(errorListener);
 
-            // Faz o parse da regra de entrada (supondo que a regra inicial da gramática seja 'program')
+            // Faz o parse da regra de entrada 
             LangParser.ProgramContext tree = parser.program();
-            
+
             CustomVisitor visitor = new CustomVisitor();
+
             SuperNode ast = visitor.visit(tree);
 
             return ast;
-            /* 
-            // Aqui você deve converter a árvore de análise em um SuperNode
-            CustomListener listener = new CustomListener();
-            parser.addParseListener(listener);
-            parser.program(); // Inicia o parsing
-
-            return listener.getResult();*/
 
         } catch (IOException e) {
             e.printStackTrace();
